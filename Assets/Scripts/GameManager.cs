@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private void Start()
-    {
-        SettingsScript.score = 0;
+	private void Start()
+	{
+		SettingsScript.Score = 0;
 
-        MaxScore data = SaveLoad.LoadGame();
+		MaxScore data = SaveLoad.LoadGame();
 
-        if (!data.Equals(null))
-        {
-            SettingsScript.maxScore = data.maxScore;
-        }
-        else
-        {
-            SettingsScript.maxScore = 0;
-        }
-    }
+		if (!data.Equals(null))
+		{
+			SettingsScript.MaxScore = data.MaxScoreToSave;
+		}
+		else
+		{
+			SettingsScript.MaxScore = 0;
+		}
+	}
 }

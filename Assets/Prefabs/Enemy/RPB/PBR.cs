@@ -139,7 +139,7 @@ public class PBR : MonoBehaviour
         animator.ResetTrigger("Idle");
         animator.ResetTrigger("Shot");
 
-        SettingsScript.score += scoreForKill;
+        SettingsScript.Score += scoreForKill;
         Destroy(agent);
         death = true;
         animator.SetTrigger("Death");

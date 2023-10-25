@@ -6,9 +6,9 @@ public class Bullet : MonoBehaviour
 {
     private void Update()
     {
-        if (!SettingsScript.pause)
+        if (!SettingsScript.Pause)
         {
-            transform.position += transform.forward * SettingsScript.bulletSpeed * Time.deltaTime;
+            transform.position += transform.forward * SettingsScript.BulletSpeed * Time.deltaTime;
         }
     }
 

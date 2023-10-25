@@ -53,7 +53,7 @@ public class BAKE : MonoBehaviour
 
     private void DeathWithScore()
     {
-        SettingsScript.score += scoreForKill;
+        SettingsScript.Score += scoreForKill;
         Death();
     }
 

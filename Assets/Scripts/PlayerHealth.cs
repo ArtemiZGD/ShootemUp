@@ -3,85 +3,85 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private GamePlaySceneButtons script;
-    [SerializeField] private Text maxScore;
-    [SerializeField] private Text score;
-    [SerializeField] private Image[] HP;
-    private int health;
+	[SerializeField] private GamePlaySceneButtons _script;
+	[SerializeField] private Text _maxScore;
+	[SerializeField] private Text _score;
+	[SerializeField] private Image[] _HP;
+	private int _health;
 
-    private void Start()
-    {
-        health = SettingsScript.startPlayerHealth;
-    }
+	private void Start()
+	{
+		_health = SettingsScript.StartPlayerHealth;
+	}
 
-    public void HealthDown()
-    {
-        if (health > 1)
-        {
-            health--;
-        }
-        else
-        {
-            health--;
-            Death();
-        }
+	public void HealthDown()
+	{
+		if (_health > 1)
+		{
+			_health--;
+		}
+		else
+		{
+			_health--;
+			Death();
+		}
 
-        ColorHP();
-    }
+		ColorHP();
+	}
 
-    public void HealthUp()
-    {
-        if (health < 3)
-        {
-            health++;
-        }
+	public void HealthUp()
+	{
+		if (_health < 3)
+		{
+			_health++;
+		}
 
-        ColorHP();
-    }
+		ColorHP();
+	}
 
-    private void ColorHP()
-    {
-        for (int i = 0; i < SettingsScript.startPlayerHealth; i++)
-        {
-            if (i < health)
-            {
-                HP[i].color = Color.green;
-            }
-            else
-            {
-                HP[i].color = Color.gray;
-            }
-        }
-    }
+	private void ColorHP()
+	{
+		for (int i = 0; i < SettingsScript.StartPlayerHealth; i++)
+		{
+			if (i < _health)
+			{
+				_HP[i].color = Color.green;
+			}
+			else
+			{
+				_HP[i].color = Color.gray;
+			}
+		}
+	}
 
-    private void Death()
-    {
-        SaveLoad.SaveGame(SettingsScript.score);
+	private void Death()
+	{
+		SaveLoad.SaveGame(SettingsScript.Score);
 
-        score.text = "Score: " + SettingsScript.score;
-        if (SettingsScript.score > SettingsScript.maxScore)
-        {
-            SettingsScript.maxScore = SettingsScript.score;
-            maxScore.text = "New max score!";
-        }
-        else
-        {
-            maxScore.text = "Max score: " + SettingsScript.maxScore;
-        }
-        script.GameOver();
-    }
+		_score.text = "Score: " + SettingsScript.Score;
+		if (SettingsScript.Score > SettingsScript.MaxScore)
+		{
+			SettingsScript.MaxScore = SettingsScript.Score;
+			_maxScore.text = "New max score!";
+		}
+		else
+		{
+			_maxScore.text = "Max score: " + SettingsScript.MaxScore;
+		}
+		_script.GameOver();
+	}
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Ammo")
-        {
-            SettingsScript.bullets += 50;
-            Destroy(other.gameObject);
-        }
-        else if (other.tag == "Med")
-        {
-            HealthUp();
-            Destroy(other.gameObject);
-        }
-    }
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Ammo")
+		{
+			SettingsScript.Bullets += 50;
+			Destroy(other.gameObject);
+		}
+		else if (other.tag == "Med")
+		{
+			HealthUp();
+			Destroy(other.gameObject);
+		}
+	}
 }

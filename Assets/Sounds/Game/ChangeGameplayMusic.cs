@@ -23,7 +23,7 @@ public class ChangeGameplayMusic : MonoBehaviour
     private void SetClip()
     {
         audioSource.clip = musics[clipNum];
-        audioSource.volume = SettingsScript.music;
+        audioSource.volume = SettingsScript.Music;
 
         audioSource.Play();
     }

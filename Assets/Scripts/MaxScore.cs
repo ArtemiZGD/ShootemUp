@@ -1,26 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class MaxScore
 {
-    public int maxScore;
+	public int MaxScoreToSave;
 
-    public int soundtrack;
+	public int Soundtrack;
 
-    public float musicVolume;
+	public float MusicVolume;
 
-    public float soundsVolume;
+	public float SoundsVolume;
 
-    public MaxScore(float music, float sounds, int clip, int score)
-    {
-        if (score > maxScore)
-        {
-            maxScore = score;
-        }
-        musicVolume = music;
-        soundsVolume = sounds;
-        soundtrack = clip;
-    }
+	public MaxScore(float music, float sounds, int clip, int score)
+	{
+		if (score > MaxScoreToSave)
+		{
+			MaxScoreToSave = score;
+		}
+		MusicVolume = music;
+		SoundsVolume = sounds;
+		Soundtrack = clip;
+	}
 }

@@ -1,164 +1,165 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SpawnEnemy : MonoBehaviour
 {
-    [SerializeField] private float chanceToSpawnAmmo = 0.5f;
-    [SerializeField] private float chanceToSpawnMed = 0.1f;
-    private bool ammoSpawned;
-    private bool medSpawned;
+	[SerializeField] private float chanceToSpawnAmmo = 0.5f;
+	[SerializeField] private float chanceToSpawnMed = 0.1f;
 
-    [Min(22)]
-    [SerializeField] private float spawnDistance = 22f;
+	[Min(22)]
+	[SerializeField] private float spawnDistance = 22f;
 
-    [SerializeField] private List<GameObject> spawnPoint;
-    [SerializeField] private GameObject enemy1;
-    [SerializeField] private GameObject enemy2;
-    [SerializeField] private GameObject enemy3;
-    [SerializeField] private GameObject turret;
+	[SerializeField] private List<GameObject> spawnPoint;
+	[SerializeField] private GameObject enemy1;
+	[SerializeField] private GameObject enemy2;
+	[SerializeField] private GameObject enemy3;
+	[SerializeField] private GameObject turret;
 
-    [SerializeField] private GameObject ammo;
-    [SerializeField] private GameObject med;
+	[SerializeField] private GameObject ammo;
+	[SerializeField] private GameObject med;
 
-    [SerializeField] private GameObject boxesPrefab;
-    private GameObject boxes;
+	[SerializeField] private GameObject boxesPrefab;
 
-    [SerializeField] private AnimationCurve enemyCount;
-    [SerializeField] private AnimationCurve chanceToSpawnEnemy1;
-    [SerializeField] private AnimationCurve chanceToSpawnEnemy2;
-    [SerializeField] private AnimationCurve chanceToSpawnEnemy3;
-    [SerializeField] private AnimationCurve chanceToSpawnTurret;
+	[SerializeField] private AnimationCurve enemyCount;
+	[SerializeField] private AnimationCurve chanceToSpawnEnemy1;
+	[SerializeField] private AnimationCurve chanceToSpawnEnemy2;
+	[SerializeField] private AnimationCurve chanceToSpawnEnemy3;
+	[SerializeField] private AnimationCurve chanceToSpawnTurret;
 
-    [SerializeField] private Text enemies;
-    [SerializeField] private Text wave;
+	[SerializeField] private Text enemies;
+	[SerializeField] private Text wave;
 
-    private GameObject player;
-    private List<GameObject> spawnPointToUse = new List<GameObject>();
-    private int waveNum;
+	private GameObject _player;
+	private List<GameObject> _spawnPointToUse = new List<GameObject>();
+	private int _waveNum;
 
-    private void Start()
-    {
-        boxes = Instantiate(boxesPrefab);
-        player = GameObject.FindGameObjectWithTag("Player");
-        waveNum = 0;
-        NewWave();
-    }
+	private bool _ammoSpawned;
+	private bool _medSpawned;
 
-    private void Update()
-    {
-        if (transform.childCount == 0)
-        {
-            NewWave();
-        }
-        enemies.text = "Enemies left: " + transform.childCount;
-        wave.text = "Wave: " + waveNum;
-    }
+	private GameObject _boxes;
 
-    private void NewWave()
-    {
-        Destroy(boxes);
-        boxes = Instantiate(boxesPrefab);
+	private void Start()
+	{
+		_boxes = Instantiate(boxesPrefab);
+		_player = GameObject.FindGameObjectWithTag("Player");
+		_waveNum = 0;
+		NewWave();
+	}
 
-        ammoSpawned = false;
-        medSpawned = false;
+	private void Update()
+	{
+		if (transform.childCount == 0)
+		{
+			NewWave();
+		}
+		enemies.text = "Enemies left: " + transform.childCount;
+		wave.text = "Wave: " + _waveNum;
+	}
 
-        for (int i = 0; i < spawnPoint.Count; i++)
-        {
-            spawnPointToUse.Add(spawnPoint[i]);
-        }
-        waveNum++;
+	private void NewWave()
+	{
+		Destroy(_boxes);
+		_boxes = Instantiate(boxesPrefab);
 
-        for (int i = 0; i < enemyCount.Evaluate(waveNum); i++)
-        {
-            SpawnNewEnemy();
-        }
-        for (int i = 0; i < spawnPointToUse.Count; i++)
-        {
-            int randomSpawnPoint = Random.Range(0, spawnPointToUse.Count);
+		_ammoSpawned = false;
+		_medSpawned = false;
 
-            if ((player.transform.position - spawnPointToUse[randomSpawnPoint].transform.position).magnitude < spawnDistance)
-            {
-                if (!ammoSpawned)
-                {
-                    Instantiate(ammo, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, boxes.transform);
-                    ammoSpawned = true;
-                }
-                else if (!medSpawned)
-                {
-                    Instantiate(med, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, boxes.transform);
-                    medSpawned = true;
-                }
-                spawnPointToUse.RemoveAt(randomSpawnPoint);
-            }
-        }
-    }
+		for (int i = 0; i < spawnPoint.Count; i++)
+		{
+			_spawnPointToUse.Add(spawnPoint[i]);
+		}
+		_waveNum++;
 
-    private void SpawnNewEnemy()
-    {
-        float randomNum = Random.Range(0, 
-            chanceToSpawnEnemy1.Evaluate(waveNum) + 
-            chanceToSpawnEnemy2.Evaluate(waveNum) + 
-            chanceToSpawnEnemy3.Evaluate(waveNum) +
-            chanceToSpawnTurret.Evaluate(waveNum));
+		for (int i = 0; i < enemyCount.Evaluate(_waveNum); i++)
+		{
+			SpawnNewEnemy();
+		}
+		for (int i = 0; i < _spawnPointToUse.Count; i++)
+		{
+			int randomSpawnPoint = Random.Range(0, _spawnPointToUse.Count);
 
-        int randomSpawnPoint = 0;
+			if ((_player.transform.position - _spawnPointToUse[randomSpawnPoint].transform.position).magnitude < spawnDistance)
+			{
+				if (!_ammoSpawned)
+				{
+					Instantiate(ammo, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, _boxes.transform);
+					_ammoSpawned = true;
+				}
+				else if (!_medSpawned)
+				{
+					Instantiate(med, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, _boxes.transform);
+					_medSpawned = true;
+				}
+				_spawnPointToUse.RemoveAt(randomSpawnPoint);
+			}
+		}
+	}
 
-        if (Random.Range(0, 1.0f) > chanceToSpawnAmmo)
-        {
-            ammoSpawned = true;
-        }
-        if (Random.Range(0, 1.0f) > chanceToSpawnMed)
-        {
-            medSpawned = true;
-        }
+	private void SpawnNewEnemy()
+	{
+		float randomNum = Random.Range(0, 
+			chanceToSpawnEnemy1.Evaluate(_waveNum) + 
+			chanceToSpawnEnemy2.Evaluate(_waveNum) + 
+			chanceToSpawnEnemy3.Evaluate(_waveNum) +
+			chanceToSpawnTurret.Evaluate(_waveNum));
 
-        while (spawnPointToUse.Count > 0)
-        {
-            randomSpawnPoint = Random.Range(0, spawnPointToUse.Count);
+		int randomSpawnPoint = 0;
 
-            if ((player.transform.position - spawnPointToUse[randomSpawnPoint].transform.position).magnitude < spawnDistance)
-            {
-                if (!ammoSpawned)
-                {
-                    Instantiate(ammo, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, boxes.transform);
-                    ammoSpawned = true;
-                }
-                else if (!medSpawned)
-                {
-                    Instantiate(med, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, boxes.transform);
-                    medSpawned = true;
-                }
-                spawnPointToUse.RemoveAt(randomSpawnPoint);
-            }
-            else
-            {
-                break;
-            }
-        } 
+		if (Random.Range(0, 1.0f) > chanceToSpawnAmmo)
+		{
+			_ammoSpawned = true;
+		}
+		if (Random.Range(0, 1.0f) > chanceToSpawnMed)
+		{
+			_medSpawned = true;
+		}
+
+		while (_spawnPointToUse.Count > 0)
+		{
+			randomSpawnPoint = Random.Range(0, _spawnPointToUse.Count);
+
+			if ((_player.transform.position - _spawnPointToUse[randomSpawnPoint].transform.position).magnitude < spawnDistance)
+			{
+				if (!_ammoSpawned)
+				{
+					Instantiate(ammo, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, _boxes.transform);
+					_ammoSpawned = true;
+				}
+				else if (!_medSpawned)
+				{
+					Instantiate(med, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, _boxes.transform);
+					_medSpawned = true;
+				}
+				_spawnPointToUse.RemoveAt(randomSpawnPoint);
+			}
+			else
+			{
+				break;
+			}
+		} 
 
 
-        if (spawnPointToUse.Count > 0)
-        {
-            if (randomNum < chanceToSpawnEnemy1.Evaluate(waveNum))
-            {
-                Instantiate(enemy1, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
-            }
-            else if (randomNum < chanceToSpawnEnemy2.Evaluate(waveNum) + chanceToSpawnEnemy1.Evaluate(waveNum))
-            {
-                Instantiate(enemy2, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
-            }
-            else if (randomNum < chanceToSpawnEnemy3.Evaluate(waveNum) + chanceToSpawnEnemy2.Evaluate(waveNum) + chanceToSpawnEnemy1.Evaluate(waveNum))
-            {
-                Instantiate(enemy3, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
-            }
-            else
-            {
-                Instantiate(turret, spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
-            }
+		if (_spawnPointToUse.Count > 0)
+		{
+			if (randomNum < chanceToSpawnEnemy1.Evaluate(_waveNum))
+			{
+				Instantiate(enemy1, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
+			}
+			else if (randomNum < chanceToSpawnEnemy2.Evaluate(_waveNum) + chanceToSpawnEnemy1.Evaluate(_waveNum))
+			{
+				Instantiate(enemy2, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
+			}
+			else if (randomNum < chanceToSpawnEnemy3.Evaluate(_waveNum) + chanceToSpawnEnemy2.Evaluate(_waveNum) + chanceToSpawnEnemy1.Evaluate(_waveNum))
+			{
+				Instantiate(enemy3, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
+			}
+			else
+			{
+				Instantiate(turret, _spawnPointToUse[randomSpawnPoint].transform.position, Quaternion.identity, transform);
+			}
 
-            spawnPointToUse.RemoveAt(randomSpawnPoint);
-        }
-    }
+			_spawnPointToUse.RemoveAt(randomSpawnPoint);
+		}
+	}
 }

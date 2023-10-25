@@ -1,24 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public static class SettingsScript
+﻿public static class SettingsScript
 {
-    static public float music = 0.5f;
+	static public float Music = 0.5f;
 
-    static public float sounds = 0.5f;
+	static public float Sounds = 0.5f;
 
-    static public int musicClip = 0;
+	static public int MusicClip = 0;
 
-    static public float bulletSpeed = 30f;
+	static public float BulletSpeed = 30f;
 
-    static public bool pause = false;
+	static public bool Pause = false;
 
-    static public int startPlayerHealth = 3;
+	static public int StartPlayerHealth = 3;
 
-    static public int score = 0;
+	static public int Score = 0;
 
-    static public int maxScore = 0;
+	static public int MaxScore = 0;
 
-    static public int bullets = 0;
+	static public int Bullets = 0;
 }

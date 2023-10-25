@@ -8,7 +8,7 @@ public class Explosion : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        audioSource.volume = SettingsScript.sounds;
+        audioSource.volume = SettingsScript.Sounds;
         StartCoroutine("Death");
     }
 

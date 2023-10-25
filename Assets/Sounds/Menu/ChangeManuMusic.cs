@@ -20,40 +20,40 @@ public class ChangeManuMusic : MonoBehaviour
 
     private void SetClip()
     {
-        audioSource.clip = musics[SettingsScript.musicClip];
-        audioSource.volume = SettingsScript.music;
-        soundtrack.text = "Soundtrack" + (SettingsScript.musicClip + 1);
+        audioSource.clip = musics[SettingsScript.MusicClip];
+        audioSource.volume = SettingsScript.Music;
+        soundtrack.text = "Soundtrack" + (SettingsScript.MusicClip + 1);
 
         audioSource.Play();
     }
 
     public void NextClip()
     {
-        if (SettingsScript.musicClip + 1 >= musics.Length)
+        if (SettingsScript.MusicClip + 1 >= musics.Length)
         {
-            SettingsScript.musicClip = 0;
+            SettingsScript.MusicClip = 0;
         }
         else
         {
-            SettingsScript.musicClip++;
+            SettingsScript.MusicClip++;
         }
-        soundtrack.text = "Soundtrack" + (SettingsScript.musicClip + 1);
-        audioSource.clip = musics[SettingsScript.musicClip];
+        soundtrack.text = "Soundtrack" + (SettingsScript.MusicClip + 1);
+        audioSource.clip = musics[SettingsScript.MusicClip];
         audioSource.Play();
     }
 
     public void LastClip()
     {
-        if (SettingsScript.musicClip <= 0)
+        if (SettingsScript.MusicClip <= 0)
         {
-            SettingsScript.musicClip = musics.Length - 1;
+            SettingsScript.MusicClip = musics.Length - 1;
         }
         else
         {
-            SettingsScript.musicClip--;
+            SettingsScript.MusicClip--;
         }
-        soundtrack.text = "Soundtrack" + (SettingsScript.musicClip + 1);
-        audioSource.clip = musics[SettingsScript.musicClip];
+        soundtrack.text = "Soundtrack" + (SettingsScript.MusicClip + 1);
+        audioSource.clip = musics[SettingsScript.MusicClip];
         audioSource.Play();
     }
 }

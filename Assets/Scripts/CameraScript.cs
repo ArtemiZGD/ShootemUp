@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
+	[SerializeField] private float _moveSpeed;
 
-    private GameObject player;
-    private Vector3 startPosition;
+	private GameObject _player;
+	private Vector3 _startPosition;
 
-    private void Start()
-    {
-        startPosition = transform.position;
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
+	private void Start()
+	{
+		_startPosition = transform.position;
+		_player = GameObject.FindGameObjectWithTag("Player");
+	}
 
-    private void Update()
-    {
-        transform.position = Vector3.Lerp(transform.position, player.transform.position + startPosition, Time.deltaTime * moveSpeed);
-    }
+	private void Update()
+	{
+		transform.position = Vector3.Lerp(transform.position, _player.transform.position + _startPosition, Time.deltaTime * _moveSpeed);
+	}
 }
